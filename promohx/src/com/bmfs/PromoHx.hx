@@ -1,12 +1,17 @@
 package com.bmfs;
 
 import com.bmfs.tech.promotion.PromoEventDispatcher;
+import cpp.Char;
+import cpp.ConstPointer;
+import cpp.NativeString;
 
 #if !flash
 import hxcpp.StaticStd;
 import hxcpp.StaticZlib;
 import hxcpp.StaticRegexp;
+
 #end
+
 /**
  * ...
  * @author Bruno Santos
@@ -27,17 +32,18 @@ class PromoHx
 	}
 	
 	@:headerCode
-	public static function registerForEvent(eventName:String):Int
+	public static function registerForEvent(eventName:ConstPointer<Char>):Int
 	{
-		trace("Registering event");
-		_eventd.registerForEvent(eventName, _eventd, genericCallback);
+		trace("Registering event " + NativeString.fromPointer(eventName));
+		
+		_eventd.registerForEvent( NativeString.fromPointer(eventName) , _eventd, genericCallback);
 		return 0;
 	}
 	
 	@:headerCode
-	public static function unregisterForEvent(eventName:String):Void
+	public static function unregisterForEvent(eventName:ConstPointer<Char>):Void
 	{
-		_eventd.unregisterForEvent(eventName, genericCallback);
+		_eventd.unregisterForEvent( NativeString.fromPointer(eventName), genericCallback);
 	}
 	
 	@:headerCode
@@ -47,9 +53,11 @@ class PromoHx
 	}
 	
 	@:headerCode
-	public static function postEvent(eventName:String):Void
+	public static function postEvent(eventName:ConstPointer<Char>):Int
 	{
-		_eventd.postEvent(eventName, null);
+		_eventd.postEvent( NativeString.fromPointer(eventName) , null);
+		
+		return 0;
 	}
 	
 	public static function genericCallback(event:PromoEvent):Void

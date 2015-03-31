@@ -1,18 +1,33 @@
 #include <iostream>
-#include <stdio.h>
 
-#include "com/bmfs/PromoHx.h"
 
-/*namespace com{
-namespace miniclip{
-class PromoHx_obj{
+namespace cpp
+{
+	template<typename T>
+	class Pointer
+	{
 	public:
-		static int init();
-		static int registerForEvent(String eventName, void* callback);
-		static void postEvent(std::string eventName);
-};
-}}*/
+		T *ptr;
+		inline Pointer(const T *inValue) : ptr((T*)inValue) { }
+	};
 
+	class Char
+	{
+
+	};
+}
+
+
+namespace com{
+	namespace bmfs{
+		class PromoHx_obj{
+		public:
+			static int init();
+			static int registerForEvent(::cpp::Pointer<char> eventName);
+			static int postEvent(::cpp::Pointer<char>  eventName);
+		};
+	}
+}
 
 extern "C" const char *hxRunLibrary();
 extern "C" void hxcpp_set_top_of_stack();
@@ -38,10 +53,15 @@ int main()
 	}
 	
 	::com::bmfs::PromoHx_obj::init();
-	//::com::miniclip::PromoHx_obj::registerForEvent("cenas", &callmeback);
-	//::com::miniclip::tech::PromoSystem_obj::update(123213123);
+	::com::bmfs::PromoHx_obj::registerForEvent("cenas");
 
-	std::cout <<  "cenas" << std::endl;
+	std::cout << "post event blah" << std::endl;
+	::com::bmfs::PromoHx_obj::postEvent("blah");
+
+	std::cout << "post event cenas" << std::endl;
+	::com::bmfs::PromoHx_obj::postEvent("cenas");
+
+	std::cout <<  "-end-" << std::endl;
 	
 	#ifdef WIN32 
 		system("pause");
