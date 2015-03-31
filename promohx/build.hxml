@@ -1,0 +1,13 @@
+-main com.bmfs.PromoHx
+-cpp out/cpp/module
+-cp src
+
+-D static_link
+-D ABI=-MTd
+-debug
+-dce no
+--macro "include('com.miniclip.tech.promotion')"
+
+-lib hxcpp
+-lib msignal
+-lib datetime

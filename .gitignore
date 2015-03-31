@@ -1,0 +1,5 @@
+bin/
+obj/
+lib/
+project/build/
+promohx/out/
