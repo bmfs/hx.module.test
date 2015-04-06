@@ -5,11 +5,11 @@ set(sources src/haxetest.cpp include/Extern.h
 
 add_library(libPromoHx STATIC IMPORTED)
 set_property(TARGET libPromoHx PROPERTY
-					IMPORTED_LOCATION D:/Projects/Code/hx.module.test_github/promohx/out/libPromoHx-debug.lib)
+					IMPORTED_LOCATION /Users/bmfs/Code/hx.module.test/promohx/out/libPromoHx-debug.a)
 
 
 
-include_directories("include" "D:/Projects/Code/hx.module.test_github/promohx/out/include/" "D:/HaxeToolkit/haxe/lib/hxcpp/3,2,37/include")
+include_directories("include" "/Users/bmfs/Code/hx.module.test/promohx/out/include/" "/usr/lib/haxe/hxcpp/3,2,37/include")
 
 add_executable(${CMAKE_PROJECT_NAME} ${sources})
 
@@ -27,3 +27,6 @@ endif(WIN32)
 if (MSVC)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 endif()
+
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -lstdc++")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++")

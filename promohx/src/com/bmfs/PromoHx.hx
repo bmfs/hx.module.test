@@ -22,26 +22,26 @@ import hxcpp.StaticRegexp;
 
 class PromoHx
 {
-	
+
 	public static var _eventd:PromoEventDispatcher;
 	static var _delegate: cpp.Callable<Void->Void>;
 	static var _initialized:Bool = false;
-	
+
 	//@:native('com::bmfs::PromoHx_obj::init')
 	public static function init():Int
 	{
 		_eventd = PromoEventDispatcher.getInstance();
 		//_delegate = delegate;
-		
+
 		trace("Promohx initialized");
-		//_initialized = true;
+		_initialized = true;
 		return 0;
 	}
-	
+
 	public static function registerForEvent(eventName:ConstPointer<Char>):Int
 	{
 		trace("Registering event " + NativeString.fromPointer(eventName));
-		
+
 		_eventd.registerForEvent( NativeString.fromPointer(eventName) , _eventd, genericCallback);
 		return 0;
 	}
@@ -50,34 +50,33 @@ class PromoHx
 	{
 		_eventd.unregisterForEvent( NativeString.fromPointer(eventName), genericCallback);
 	}
-	
+
 	public static function unregisterObserverForAllEvents():Void
 	{
 		_eventd.unregisterObserverForAllEvents(_eventd);
 	}
-	
+
 	@:headerCode
 	public static function postEvent(eventName:ConstPointer<Char>):Int
 	{
 		_eventd.postEvent( NativeString.fromPointer(eventName) , null);
-		
+
 		return 0;
 	}
-	
+
 	static function testf():Void { trace("called from c++"); }
-	
+
 	public static function genericCallback(event:PromoEvent):Void
 	{
-		if (!_initialized) return;
-		
+
 		Extern.testfunc( cpp.Function.fromStaticFunction(testf) );
 		trace("event (" + event.name+") was called!");
 		//_delegate.call();
 	}
-	
+
 	static function main():Void
 	{
-		
+
 	}
-	
+
 }
