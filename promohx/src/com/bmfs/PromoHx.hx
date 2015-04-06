@@ -1,37 +1,43 @@
 package com.bmfs;
 
+import com.bmfs.Include;
+import com.bmfs.Extern;
+
 import com.bmfs.tech.promotion.PromoEventDispatcher;
 import cpp.Char;
 import cpp.ConstPointer;
+import cpp.Function;
+import cpp.Callable;
 import cpp.NativeString;
+import cpp.RawPointer;
+
 
 #if !flash
 import hxcpp.StaticStd;
 import hxcpp.StaticZlib;
 import hxcpp.StaticRegexp;
-
 #end
 
-/**
- * ...
- * @author Bruno Santos
- */
 
-@:headerCode
+
 class PromoHx
 {
-	public static var _eventd:PromoEventDispatcher;
 	
-	@:headerCode
+	public static var _eventd:PromoEventDispatcher;
+	static var _delegate: cpp.Callable<Void->Void>;
+	static var _initialized:Bool = false;
+	
+	//@:native('com::bmfs::PromoHx_obj::init')
 	public static function init():Int
 	{
 		_eventd = PromoEventDispatcher.getInstance();
+		//_delegate = delegate;
 		
 		trace("Promohx initialized");
+		//_initialized = true;
 		return 0;
 	}
 	
-	@:headerCode
 	public static function registerForEvent(eventName:ConstPointer<Char>):Int
 	{
 		trace("Registering event " + NativeString.fromPointer(eventName));
@@ -39,14 +45,12 @@ class PromoHx
 		_eventd.registerForEvent( NativeString.fromPointer(eventName) , _eventd, genericCallback);
 		return 0;
 	}
-	
-	@:headerCode
+
 	public static function unregisterForEvent(eventName:ConstPointer<Char>):Void
 	{
 		_eventd.unregisterForEvent( NativeString.fromPointer(eventName), genericCallback);
 	}
 	
-	@:headerCode
 	public static function unregisterObserverForAllEvents():Void
 	{
 		_eventd.unregisterObserverForAllEvents(_eventd);
@@ -60,9 +64,15 @@ class PromoHx
 		return 0;
 	}
 	
+	static function testf():Void { trace("called from c++"); }
+	
 	public static function genericCallback(event:PromoEvent):Void
 	{
+		if (!_initialized) return;
+		
+		Extern.testfunc( cpp.Function.fromStaticFunction(testf) );
 		trace("event (" + event.name+") was called!");
+		//_delegate.call();
 	}
 	
 	static function main():Void

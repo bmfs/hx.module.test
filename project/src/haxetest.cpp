@@ -1,42 +1,19 @@
 #include <iostream>
 
+#include <Extern.h>
+#include <hxcpp.h>
+#include <com/bmfs/PromoHx.h>
 
-namespace cpp
-{
-	template<typename T>
-	class Pointer
-	{
-	public:
-		T *ptr;
-		inline Pointer(const T *inValue) : ptr((T*)inValue) { }
-	};
-
-	class Char
-	{
-
-	};
-}
-
-
-namespace com{
-	namespace bmfs{
-		class PromoHx_obj{
-		public:
-			static int init();
-			static int registerForEvent(::cpp::Pointer<char> eventName);
-			static int postEvent(::cpp::Pointer<char>  eventName);
-		};
-	}
-}
 
 extern "C" const char *hxRunLibrary();
 extern "C" void hxcpp_set_top_of_stack();
 
 
-int callmeback()
+
+void callmeback()
 {
 	std::cout << "callback was called" << std::endl;
-	return 0;
+	return;
 }
 
 

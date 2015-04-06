@@ -45,7 +45,7 @@ class PromoEventDispatcher
 		return _instance;
 	}
 	
-	public function registerForEvent(eventName:String, caller:Dynamic, callback:EventCallback):Void
+	public function registerForEvent(eventName:String, caller:Dynamic, callb:EventCallback):Void
 	{
 		//for (eventName in events)
 		//{	
@@ -59,18 +59,18 @@ class PromoEventDispatcher
 				observersList.set(eventName, observer);
 			}
 
-			eventsList.push({ name: eventName, caller: caller, callback: callback, observer:observer});
+			eventsList.push({ name: eventName, caller: caller, callback: callb, observer:observer});
 
-			observer.add(callback);
+			observer.add(callb);
 		//}
 	}
 	
-	public function unregisterForEvent(eventName:String, callback:EventCallback):Void
+	public function unregisterForEvent(eventName:String, callb:EventCallback):Void
 	{
 		if (observersList.exists(eventName))
 		{
 			var observer:Signal1<Dynamic> = observersList.get(eventName);
-			observer.remove(callback);
+			observer.remove(callb);
 			
 		}
 	}

@@ -16,7 +16,7 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="promohx\src" />
-    <class path="..\..\..\HaxeToolkit\haxe\std" />
+    <class path="..\..\..\HaxeToolkit\haxe\lib\hxcpp\3,2,37\src" />
   </classpaths>
   <!-- Build options -->
   <build>

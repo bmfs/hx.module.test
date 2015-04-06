@@ -1,3 +1,1 @@
 haxe build.hxml
-
-pause
