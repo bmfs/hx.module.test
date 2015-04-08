@@ -1,5 +1,11 @@
 #include <iostream>
 
+#define HXCPP_VISIT_ALLOCS
+#define HXCPP_DEBUG
+#define HX_WINDOWS
+#define _USING_V120_SDK71_
+#define HXCPP_API_LEVEL 321
+
 #include <Extern.h>
 #include <hxcpp.h>
 #include <com/bmfs/PromoHx.h>
@@ -29,7 +35,9 @@ int main()
 		return -1;
 	}
 	
+	std::cout << "init promoHX" << std::endl;
 	::com::bmfs::PromoHx_obj::init();
+	std::cout << "register event" << std::endl;
 	::com::bmfs::PromoHx_obj::registerForEvent("cenas");
 
 	std::cout << "post event blah" << std::endl;

@@ -28,14 +28,14 @@ class PromoHx
 	static var _initialized:Bool = false;
 
 	//@:native('com::bmfs::PromoHx_obj::init')
-	public static function init():Int
+	public static function init():Void
 	{
 		_eventd = PromoEventDispatcher.getInstance();
 		//_delegate = delegate;
 
-		trace("Promohx initialized");
 		_initialized = true;
-		return 0;
+		trace("Promohx initialized");
+		return;
 	}
 
 	public static function registerForEvent(eventName:ConstPointer<Char>):Int

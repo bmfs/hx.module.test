@@ -6,21 +6,22 @@ add_library(libPromoHx STATIC IMPORTED)
 
 if (WIN32)
 	set(ProjectRoot D:/Projects/Code/hx.module.test_github)
-	set_property(TARGET libPromoHx PROPERTY IMPORTED_LOCATION ${ProjectRoot}/promohx/out/libPromoHx-debug.lib)
+	
 else()
 
 	set(ProjectRoot /Users/bmfs/Code/hx.module.test_github)
-	set_property(TARGET libPromoHx PROPERTY IMPORTED_LOCATION ${ProjectRoot}/promohx/out/libPromoHx-debug.a)
 
 endif()
 
-include_directories("include" ${ProjectRoot}/promohx/out/include/ "/usr/lib/haxe/hxcpp/3,2,37/include" "D:/HaxeToolkit/haxe/lib/hxcpp/3,2,37/include")
+LINK_DIRECTORIES(${ProjectRoot}/promohx/out/ "D:/Projects/Code/libs/hxcpp/lib/Windows/")
+
+include_directories("include" ${ProjectRoot}/promohx/out/include/ "/usr/lib/haxe/hxcpp/3,2,37/include" "D:/Projects/Code/libs/hxcpp/include")
 
 add_executable(${CMAKE_PROJECT_NAME} ${sources})
-target_link_libraries(${CMAKE_PROJECT_NAME} libPromoHx)
+target_link_libraries(${CMAKE_PROJECT_NAME} libPromoHx-debug) 
 
 if(WIN32)
-set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE")
+set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES LINK_FLAGS_DEBUG "/NODEFAULTLIB:LIBCMT /SUBSYSTEM:CONSOLE")
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS_DEBUG "_CONSOLE")
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES LINK_FLAGS_RELWITHDEBINFO "/SUBSYSTEM:CONSOLE")
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS_RELWITHDEBINFO "_CONSOLE")

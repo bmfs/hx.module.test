@@ -1,12 +1,13 @@
 -main com.bmfs.PromoHx
 -cpp out
 -cp src
-
--D static_link
--D ABI=-MTd
--debug
-
+-dce no
 
 -lib hxcpp
 -lib msignal
 -lib datetime
+
+-D static_link
+-D ABI=-MTd
+-debug
+-D HXCPP_M32
